@@ -35,6 +35,8 @@ public class Mine : MonoBehaviour
                 IsMineExplode = true;
             }
         }
+
+        
     }
 
     private void OnTriggerEnter(Collider other)
