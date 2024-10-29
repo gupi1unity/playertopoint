@@ -3,18 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IDamagable
 {
     [SerializeField] private NavMeshAgent _agent;
     [SerializeField] private LayerMask _groundLayer;
     [SerializeField] private int _healthValue;
     [SerializeField] private GameObject _pointPrefab;
+    [SerializeField] private AnimationCurve _jumpCurve;
+    [SerializeField] private float _jumpAnimationDuration;
 
     private Mover _mover;
     private Pointer _pointer;
     private PlayerView _playerView;
     private Health _health;
-    private DamageTaker _damageTaker;
+    private Jumper _jumper;
 
     private bool _isDead;
     private bool _isAnimationRunning = true;
@@ -29,8 +31,7 @@ public class PlayerController : MonoBehaviour
         _mover = new Mover(_agent, _pointer);
         _playerView = GetComponent<PlayerView>();
         _health = new Health(_healthValue);
-        _damageTaker = GetComponent<DamageTaker>();
-        _damageTaker.Initialize(_health);
+        _jumper = new Jumper(_agent, _jumpCurve, _jumpAnimationDuration, this);
     }
 
     private void Update()
@@ -59,6 +60,8 @@ public class PlayerController : MonoBehaviour
             {
                 _playerView.ChangeAnimationLayer(2);
             }
+
+            _jumper.Jump();
         }
         else
         {
@@ -68,5 +71,10 @@ public class PlayerController : MonoBehaviour
                 _isAnimationRunning = false;
             }
         }
+    }
+
+    public void TakeDamage(int damage)
+    {
+        _health.RemoveHealth(damage);
     }
 }
