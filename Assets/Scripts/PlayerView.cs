@@ -6,6 +6,7 @@ public class PlayerView : MonoBehaviour
 {
     private readonly int IsRunningKey = Animator.StringToHash("isRunning");
     private readonly int IsDeadTrigger = Animator.StringToHash("IsDead");
+    private readonly int IsJumpingKey = Animator.StringToHash("IsJumping");
 
     [SerializeField] private Animator _animator;
 
@@ -27,5 +28,15 @@ public class PlayerView : MonoBehaviour
     public void PlayDeadAnimation()
     {
         _animator.SetTrigger(IsDeadTrigger);
+    }
+
+    public void StartJump()
+    {
+        _animator.SetBool(IsJumpingKey, true);
+    }
+
+    public void StopJump()
+    {
+        _animator.SetBool(IsJumpingKey, false);
     }
 }

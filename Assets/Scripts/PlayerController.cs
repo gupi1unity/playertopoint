@@ -31,14 +31,12 @@ public class PlayerController : MonoBehaviour, IDamagable
         _mover = new Mover(_agent, _pointer);
         _playerView = GetComponent<PlayerView>();
         _health = new Health(_healthValue);
-        _jumper = new Jumper(_agent, _jumpCurve, _jumpAnimationDuration, this);
+        _jumper = new Jumper(_agent, _jumpCurve, _jumpAnimationDuration, this, _playerView);
     }
 
     private void Update()
     {
         _isDead = _health.HealthValue <= 0 ? true : false;
-
-        Debug.Log(_health.HealthValue);
 
         if (_isDead == false)
         {
