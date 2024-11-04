@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     private Camera _camera;
 
-    private void Awake()
+    public void Initialize()
     {
         _camera = Camera.main;
 
