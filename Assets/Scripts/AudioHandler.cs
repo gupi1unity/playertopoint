@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,7 +10,7 @@ public class AudioHandler
     private const float OffVolume = -80.0f;
     private const float OnVolume = 0f;
 
-    private const string MusicKey = "MusicVolume";
+    private const string MusicKey = "MasterVolume";
 
     private AudioMixerGroup _audioMixerGroup;
 

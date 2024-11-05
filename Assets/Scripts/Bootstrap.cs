@@ -13,6 +13,7 @@ public class Bootstrap : MonoBehaviour
 
     [SerializeField] private AudioHandler _audioHandler;
     [SerializeField] private AudioMixerGroup _mixerGroup;
+    [SerializeField] private SoundsFX _soundsFX;
 
     [SerializeField] private GameObject _minePrefab;
     [SerializeField] private List<Transform> _minePositions;
@@ -31,7 +32,8 @@ public class Bootstrap : MonoBehaviour
 
         foreach (var position in _minePositions)
         {
-            Instantiate(_minePrefab, position.position, Quaternion.identity);
+            GameObject mine = Instantiate(_minePrefab, position.position, Quaternion.identity);
+            mine.GetComponent<Mine>().Initialize(_soundsFX);
         }
     }
 }

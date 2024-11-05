@@ -1,13 +1,25 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Mine : MonoBehaviour
 {
+    public event Action MineExploded;
+
     [SerializeField] private float _timeToExplode = 5f;
     [SerializeField] private ParticleSystem _particleSystem;
     [SerializeField] private int _damage;
     [SerializeField] private float _damageRadius = 5f;
+
+    private SoundsFX _soundsFX;
+
+    public void Initialize(SoundsFX soundsFX)
+    {
+        _soundsFX = soundsFX;
+
+        MineExploded += _soundsFX.OnMineExploded;
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -39,6 +51,13 @@ public class Mine : MonoBehaviour
             }
         }
 
+        MineExploded?.Invoke();
+
         Destroy(gameObject);
+    }
+
+    private void OnDestroy()
+    {
+        MineExploded -= _soundsFX.OnMineExploded;
     }
 }
